@@ -8,6 +8,7 @@ var chartMargin = {top: 10, right: 30, bottom: 70, left: 60},
 	chartWidth = 920 - chartMargin.left + chartMargin.right,
 	chartHeight = 400 - chartMargin.top - chartMargin.bottom;
 
+//Selecting the divs and appends the SVG
 var countryChartSvg = d3.select("#country-line-chart")
 	.append("svg")
 	.attr("height", chartHeight + chartMargin.top + chartMargin.bottom)
@@ -16,18 +17,18 @@ var countryChartSvg = d3.select("#country-line-chart")
 	.attr("transform", 
 		"translate(" + chartMargin.left +"," + chartMargin.top +")");
 
-
+//Gets the remove button
 var removeButton = document.getElementById("close-country-line-chart");
 removeButton.style.visibility = "hidden";
 
-var colorArray = ['#e41a1c','#377eb8','#4daf4a','#984ea3'];
+var colorArray = ["#e41a1c","#377eb8","#4daf4a","#984ea3"];
 
 function loadCountryLineChart(countryData)
 {	
 	//Deletes tha graph so we don't draw another over it
 	removeAll(false);
 
-	//We don't want to draw a country that's already in the chart
+	//We don'"'t want to draw a country that's already in the chart
 	if(!(activeCountries.includes(countryData[0].country)))
 	{
 		activeCountries.push(countryData[0].country);
@@ -198,7 +199,7 @@ function loadCountryLineChart(countryData)
 	drawThisLegend();
 }
 
-//Function to remove all our elements
+//Function to remove all elements
 function removeAll(isClosed)
 {
 	d3.selectAll(".countryLine").remove();
@@ -217,7 +218,7 @@ function removeAll(isClosed)
 	d3.selectAll(".country-chart-text").remove();
 	
 	removeButton.style.visibility = "hidden";
-	tooltip.style('opacity', 0);
+	tooltip.style("opacity", 0);
 
 	if(isClosed)
 	{

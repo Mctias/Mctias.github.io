@@ -1,3 +1,8 @@
+body{
+	zoom:80%;
+}
+
+
 #charts div{
 	position: relative;
 	display: inline;

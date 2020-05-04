@@ -13,10 +13,10 @@ var numberRange = [-20, -10, 0, 10, 20, 30];
 var colorRange = ["#2b8cbe", "#a6bddb", "#ece7f2", "#fee8c8" , "#fdbb84" , "#e34a33"];
 
 //Selects the map div and appends the svg
-var mapSvg = d3.selectAll('#mapdiv')
-	.append('svg')
-	.attr('width', width )
-	.attr('height', height );
+var mapSvg = d3.selectAll("#mapdiv")
+	.append("svg")
+	.attr("width", width )
+	.attr("height", height );
 
 mapSvg.call(d3.zoom()
     .extent([[0, 0], [width, height]])
@@ -24,13 +24,13 @@ mapSvg.call(d3.zoom()
     .on("zoom", zoomed));
 
 //Background of the map
-mapSvg.append('rect')
-	.attr('class', 'background')
-	.attr('width', width)
-	.attr('height', height)
-	.style('fill', "#E6E6FA");
+mapSvg.append("rect")
+	.attr("class", "background")
+	.attr("width", width)
+	.attr("height", height)
+	.style("fill", "#E6E6FA");
 
-var mapG = mapSvg.append('g');
+var mapG = mapSvg.append("g");
 
 
 //Projection for the map
@@ -44,32 +44,34 @@ var geoPath = d3.geoPath()
 	.projection(projection);
 
 //div for the tooltip
-var tooltip = d3.select('body').append('div')
-	.attr('class', 'tooltip')
-	.style('opacity', 0);
+var tooltip = d3.select("body").append("div")
+	.attr("class", "tooltip")
+	.style("opacity", 0);
 
 
-//Loads the map depending on the selected mode and time
+//Loads the map depending with the selected mode and current time as input
 function loadMap(sliderInput){
 	//If the map already has been drawn once remove so they are not drawn on each other (will lag otherwise)
-	d3.selectAll('.country').remove();
-	d3.selectAll('.choropleth-text').remove();
+	d3.selectAll(".country").remove();
+	d3.selectAll(".choropleth-text").remove();
 
 	
-	//Time manipulation mode
+	//Time manipulation modes
+	//Menu
 	if(document.getElementById("menu").checked)
 	{
 		//Month input
-		var monthSelection = document.getElementById('month_selection');
+		var monthSelection = document.getElementById("month_selection");
 		var month = monthSelection.options[monthSelection.selectedIndex].value;
 	
 		//Year input
-		var yearSelection = document.getElementById('year_selection');
+		var yearSelection = document.getElementById("year_selection");
 		var year = yearSelection.options[yearSelection.selectedIndex].value;
 
 		document.getElementById("time-slider-div").style.visibility = "hidden";
 		document.getElementById("time-menu").style.visibility = "visible";
 	}
+	//Time slider
 	else
 	{
 		//Month input from slider
@@ -83,27 +85,27 @@ function loadMap(sliderInput){
 	}
 
 
-	//Mode input
-	if(document.getElementById('r1').checked)
-		var mode = document.getElementById('r1').value;
-	else if(document.getElementById('r2').checked)
-		var mode = document.getElementById('r2').value;
+	//Input that decides what data the map shows
+	if(document.getElementById("r1").checked)
+		var mode = document.getElementById("r1").value;
+	else if(document.getElementById("r2").checked)
+		var mode = document.getElementById("r2").value;
 
-	else if(document.getElementById('r3').checked)
-		var mode = document.getElementById('r3').value;
+	else if(document.getElementById("r3").checked)
+		var mode = document.getElementById("r3").value;
 
-	else if(document.getElementById('r4').checked)
-		var mode = document.getElementById('r4').value;
+	else if(document.getElementById("r4").checked)
+		var mode = document.getElementById("r4").value;
 
 	else
 		var mode = "averagetempuncertainty";
 
 
-	//Color mode input
-	if(document.getElementById('cs1').checked)
-		colorMode = 'unclassed';
+	//Color mode input decides whether the color system is classed or unclassed
+	if(document.getElementById("cs1").checked)
+		colorMode = "unclassed";
 	else
-		colorMode = 'classed';
+		colorMode = "classed";
 
 	//Clears all the values so they are not remebered when we update the map
 	for(var i = 0 ; i < mapData.features.length; i++)
@@ -111,13 +113,14 @@ function loadMap(sliderInput){
 		mapData.features[i].properties.tempData = undefined;
 	}
 
-	//The data will depend on the selected mode
-	if(mode == 'averagetemp')
+	//Selects the data in regards to the mode
+	//Average temperature mode (raw)
+	if(mode == "averagetemp")
 	{
 		if(monthSelection)
 			monthSelection.disabled = false;
 		//The color domain depend on the min and max temperatures of the data
-		if(colorMode == 'unclassed')
+		if(colorMode == "unclassed")
 		{
 			color = d3.scaleSequential(d3.interpolateRdYlBu)
 				.domain(d3.extent(tempData, function(d){ return d.AverageTemperature }).reverse());
@@ -132,7 +135,7 @@ function loadMap(sliderInput){
 		//Adds the average temperature to the matching country
 		for(var i = 0; i < tempData.length; i++)
 		{
-			if(tempData[i].dt == year + "-" + month + '-01')
+			if(tempData[i].dt == year + "-" + month + "-01")
 			{
 				var countryName = tempData[i].Country;
 				
@@ -149,12 +152,12 @@ function loadMap(sliderInput){
 		}
 	}
 
-	//The data will depend on the selected mode
-	if(mode == 'averagetempdeviation')
+	//Average temperature deviation mode (refined)
+	if(mode == "averagetempdeviation")
 	{
 		//The color domain depend on the min and max temperatures of the data
 
-		if(colorMode == 'unclassed')
+		if(colorMode == "unclassed")
 		{
 			color = d3.scaleSequential(d3.interpolateRdYlBu)
 				.domain([5,-5]);
@@ -172,7 +175,7 @@ function loadMap(sliderInput){
 		//Adds the average temperature to the matching country
 		for(var i = 0; i < tempData.length; i++)
 		{
-			if(tempData[i].dt == year + "-" + month + '-01')
+			if(tempData[i].dt == year + "-" + month + "-01")
 			{
 				var countryName = tempData[i].Country;
 				
@@ -195,7 +198,8 @@ function loadMap(sliderInput){
 		}
 	}
 
-	else if(mode == 'averagetempuncertainty')
+	//Average temperature uncertainty mode (raw)
+	else if(mode == "averagetempuncertainty")
 	{
 		//The color domain depend on the min and max temperatures of the data
 		color = d3.scaleSequential(d3.interpolateReds)
@@ -223,7 +227,8 @@ function loadMap(sliderInput){
 		}
 	}
 
-	else if(mode == 'averagetempdeviationyearly')
+	//Average yearly temperature deviation mode (refined)
+	else if(mode == "averagetempdeviationyearly")
 	{
 
 		color = d3.scaleSequential(d3.interpolateRdYlBu)
@@ -255,13 +260,13 @@ function loadMap(sliderInput){
 		}
 		
 	}
-
+	//Average yearly temperature mode (raw)
 	else 
 	{
 		if(monthSelection)
 			monthSelection.disabled = false;
 
-		if(colorMode == 'unclassed')
+		if(colorMode == "unclassed")
 		{
 			color = d3.scaleSequential(d3.interpolateRdYlBu)
 				.domain(d3.extent(yearlyCountryTemp, function(d){ return d.value }).reverse());
@@ -273,7 +278,6 @@ function loadMap(sliderInput){
 			color.domain(numberRange)
 		}
 
-		//Adds the average temperature to the matching country
 		for(var i = 0; i < yearlyCountryTemp.length; i++)
 		{
 			if(yearlyCountryTemp[i].year == year)
@@ -295,26 +299,26 @@ function loadMap(sliderInput){
 
 
 	//draw the map
-	mapG.selectAll('path')
+	mapG.selectAll("path")
 		.data(mapData.features)
 		.enter()
-		.append('path')
-		.attr('d', geoPath)
-		.style('stroke', 'black')
-		.style('stroke-width', 0.2)
-		.style('fill', function(d){
+		.append("path")
+		.attr("d", geoPath)
+		.style("stroke", "black")
+		.style("stroke-width", 0.2)
+		.style("fill", function(d){
 			var value = d.properties.tempData;
-			if(value != undefined && value != '')
+			if(value != undefined && value != "")
 				return color(value)
 			else
-				return 'grey';
+				return "grey";
 		})
-		.attr('class', function(d){return 'country'})
-		.style('opacity', 0.9)
-		.on('mouseover', onMouseover)
-		.on('mouseout', onMouseout)
-		.on('click', onMouseclick)
-		.on('contextmenu', onContextMenu);
+		.attr("class", function(d){return "country"})
+		.style("opacity", 0.9)
+		.on("mouseover", onMouseover)
+		.on("mouseout", onMouseout)
+		.on("click", onMouseclick)
+		.on("contextmenu", onContextMenu);
 
 	mapSvg.append("text")
 		.attr("class", "choropleth-text")
@@ -333,58 +337,59 @@ function loadMap(sliderInput){
 function onMouseover(d){
 
 	//Select all countries and reduce their opacity
-	d3.selectAll('.country')
+	d3.selectAll(".country")
 		.transition()
 		.duration(200)
-		.style('opacity', 0.2);
+		.style("opacity", 0.2);
 
 	//Select the marked country and increase the opacity
 	d3.select(this)
 		.transition()
 		.duration(200)
-		.style('opacity', 1)
-		.style('stroke-width', 1);
+		.style("opacity", 1)
+		.style("stroke-width", 1);
 
 	//Show a tooltip when we hover over a country
 	tooltip.transition()
 		.duration(200)
-		.style('opacity', 0.9);
+		.style("opacity", 0.9);
 
-	tooltip.html(d.properties.name + '<br>' + 'Average temperature: ' + d.properties.tempData + ' °C'+ 
-		'<br>'+ 'Average temperature uncertainty: ' + d.properties.avgUnc + ' °C')
-		.style('left', (d3.event.pageX) + 'px')
-		.style('top', (d3.event.pageY - 28) + 'px');
+	tooltip.html(d.properties.name + "<br>" + "Average temperature: " + d.properties.tempData + " °C"+ 
+		"<br>"+ "Average temperature uncertainty: " + d.properties.avgUnc + " °C")
+		.style("left", (d3.event.pageX) + "px")
+		.style("top", (d3.event.pageY - 28) + "px");
 }
 
 function onContextMenu()
 {
 	d3.event.preventDefault();
 
-	console.log('right click');
+	console.log("right click");
 }
 
 //Reset when mouse out
 function onMouseout(){
 
-	d3.selectAll('.country')
+	d3.selectAll(".country")
 		.transition()
 		.duration(200)
-		.style('opacity', 0.9)
-		.style('stroke-width', 0.2);
+		.style("opacity", 0.9)
+		.style("stroke-width", 0.2);
 
 	d3.select(this)
 		.transition()
 		.duration(200)
-		.style('opacity', 0.9)
-		.style('stroke-width', 0.2);
+		.style("opacity", 0.9)
+		.style("stroke-width", 0.2);
 
-	tooltip.style('opacity', 0);
+	tooltip.style("opacity", 0);
 }
 
+//Load a country specific heat map and line graph
 function onMouseclick(d)
 {
 	d3.select(this)
-		.style('stroke-width', 1.5);
+		.style("stroke-width", 1.5);
 
 	currentCountry = d.properties.name;
 
@@ -406,6 +411,7 @@ function zoomed()
     mapG.attr("transform", d3.event.transform);
 }
 
+//Draws the color legend depending on the current color mode and data mode
 function drawLegend()
 {
 	//Removes the svg so they are not drawn upon eachother
@@ -426,17 +432,18 @@ function drawLegend()
 		.attr("id", "legend-svg");
 
 	var defs = legendSvg.append("defs");
-	//Mode input
-	if(document.getElementById('r1').checked)
-		var mode = document.getElementById('r1').value;
-	else if(document.getElementById('r2').checked)
-		var mode = document.getElementById('r2').value;
 
-	else if(document.getElementById('r3').checked)
-		var mode = document.getElementById('r3').value;
+	//Mode input from the radio buttons
+	if(document.getElementById("r1").checked)
+		var mode = document.getElementById("r1").value;
+	else if(document.getElementById("r2").checked)
+		var mode = document.getElementById("r2").value;
 
-	else if(document.getElementById('r4').checked)
-		var mode = document.getElementById('r4').value;
+	else if(document.getElementById("r3").checked)
+		var mode = document.getElementById("r3").value;
+
+	else if(document.getElementById("r4").checked)
+		var mode = document.getElementById("r4").value;
 
 	else
 		var mode = "averagetempuncertainty";
@@ -444,7 +451,6 @@ function drawLegend()
 
 
 	//I don't know why i need this... but I do
-	console.log(mode)
 	if(mode == "averagetempuncertainty")
 	{
 		var legendGradient = defs.append("linearGradient")
@@ -511,13 +517,13 @@ function drawLegend()
 		.style("text-anchor", "end")
 		.style("font-size", "12px");
 
-	if(colorMode == 'classed'){
+	if(colorMode == "classed"){
 
 	d3.selectAll("#unclassed-legend").remove();
 		for(var colorV in colorRange)
 		{
 			legendG.append("rect")
-				.attr('id', function(d){return 'classed-legend'})
+				.attr("id", function(d){return "classed-legend"})
 				.attr("x", 600 + colorV*20)
 				.attr("y", legendHeigth - legendPadding / 2)
 				.attr("width", 20)
@@ -528,7 +534,7 @@ function drawLegend()
 
 
 			legendG.append("text")
-				.attr('id', function(d){return 'classed-legend'})
+				.attr("id", function(d){return "classed-legend"})
 				.attr("x", 609 + colorV*20)
 				.attr("y", legendHeigth + 10)
 				.attr("text-anchor", "middle")
