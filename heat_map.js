@@ -17,7 +17,7 @@ var heatMapSvg = d3.select("#heat_map")
 	.attr("id", "heatMapSvg")
 	.style("background-color", "#E6E6FA")
 	.attr("transform", 
-		"translate(" + margin.left +"," + (margin.top * 5) +")");
+		"translate(" + (margin.left + 200) +"," + (margin.top * 5) +")");
 
 var heatMapColors;
 var observedCountries = [];
@@ -127,7 +127,7 @@ function loadHeatMap(firstLoad, country, isDisplayingCountry, sliderData)
 					heatMapData[i].AverageTemperature -= monthlyAverages[11].value;
 	
 				else	
-				console.log("det funkar inte");
+					console.log("Something went wrong with the first load of the heat map");
 			}	
 		}
 	}
@@ -206,8 +206,8 @@ function loadHeatMap(firstLoad, country, isDisplayingCountry, sliderData)
 
 	heatMapSvg.append("text")
 		.attr("class", "heatMapText")
-		.attr("x", (125))
-		.attr("y", heatMapHeight-20 )
+		.attr("x", (45))
+		.attr("y", heatMapHeight - 15)
 		.style("fill", "black")
 		.style("font-size", "12px")
 		.text("Low (-" + number + " °C)");
@@ -215,8 +215,8 @@ function loadHeatMap(firstLoad, country, isDisplayingCountry, sliderData)
 
 	heatMapSvg.append("text")
 		.attr("class", "heatMapText")
-		.attr("x", (heatMapWidth -145))
-		.attr("y", heatMapHeight-20 )
+		.attr("x", (heatMapWidth - 110))
+		.attr("y", heatMapHeight - 15)
 		.style("fill", "black")
 		.style("font-size", "12px")
 		.text("High (" + number + " °C)");

@@ -68,8 +68,9 @@ function loadMap(sliderInput){
 		var yearSelection = document.getElementById("year_selection");
 		var year = yearSelection.options[yearSelection.selectedIndex].value;
 
-		document.getElementById("time-slider-div").style.visibility = "hidden";
-		document.getElementById("time-menu").style.visibility = "visible";
+		document.getElementById("time-slider-div").style.display = "none";
+		document.getElementById("time-menu-year").style.display = "inline";
+		document.getElementById("time-menu-month").style.display = "inline";
 	}
 	//Time slider
 	else
@@ -80,8 +81,9 @@ function loadMap(sliderInput){
 		//Year input form slider
 		var year = yearFormat(sliderInput);
 
-		document.getElementById("time-slider-div").style.visibility = "visible";
-		document.getElementById("time-menu").style.visibility = "hidden";
+		document.getElementById("time-slider-div").style.display = "inline";
+		document.getElementById("time-menu-year").style.display = "none";
+		document.getElementById("time-menu-month").style.display = "none";
 	}
 
 
@@ -398,7 +400,8 @@ function onMouseclick(d)
 	loadCountryLineChart(filteredCountry);
 	
 	//loadScatterPlot(d.properties.name);
-	loadHeatMap(false, currentCountry, true);
+	if(document.getElementById("link-maps").checked)
+		loadHeatMap(false, currentCountry, true);
 	
 	function filterCriteria(d)
 	{
@@ -507,7 +510,7 @@ function drawLegend()
 		.text("Low (" + Math.round(color.domain()[index2]) + " °C)")
 		.attr("x", 0)
 		.attr("y", legendHeigth - 35)
-		.style("font-size", "12px");
+		.style("font-size", "10px");
 
 	legendG.append("text")
 		.attr("id", "unclassed-legend")
@@ -515,7 +518,7 @@ function drawLegend()
 		.attr("x", legendWidth)
 		.attr("y", legendHeigth - 35)
 		.style("text-anchor", "end")
-		.style("font-size", "12px");
+		.style("font-size", "10px");
 
 	if(colorMode == "classed"){
 

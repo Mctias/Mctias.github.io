@@ -1,7 +1,7 @@
 //Standard margin praxis
-var margin = {top: 10, right: 30, bottom: 70, left: 60},
-	chartWidth = 920 - margin.left + margin.right,
-	chartHeight = 400 - margin.top - margin.bottom;
+var margin = {top: 10, right: 10, bottom: 70, left: 60},
+	chartWidth = 940 - margin.left + margin.right,
+	chartHeight = 410 - margin.top - margin.bottom;
 
 //Appends the svg
 var mainChartSvg = d3.select("#line-graph")
@@ -27,14 +27,12 @@ function loadLineGraph()
 	document.getElementById("hide-unc").style.visibility = "visible";
 	showUnc.style.visibility = "visible";
 
-	
-
 	//X-axis
 	var x = d3.scaleLinear()
 		.domain(d3.extent(yearlyTemp, function(d) { return d.year; }))
 		.range([0, chartWidth]);
 
-	var  bisectDate = d3.bisector(function(d) { return d.year; }).left;
+	var  bisectDate = d3.bisector(function(d) { return d.year; }).right;
 		
 	mainChartSvg.append("g")
 		.attr("class", "x")
@@ -42,9 +40,10 @@ function loadLineGraph()
 		.call(d3.axisBottom(x))
 		.append("text")
 		.attr("x", chartWidth / 2)
-		.attr("y", 35 )
+		.attr("y", 30 )
 		.style("fill", "black")
-		.style("font-size", "14px")
+		.style("font-size", "12px")
+		.style("font-family", "Open sans")
 		.text("Year");
 
 	//Y-axis
@@ -62,7 +61,8 @@ function loadLineGraph()
       	.attr("dy", "1em")
       	.style("text-anchor", "middle")  
       	.style("fill", "black")
-      	.style("font-size", "14px")
+      	.style("font-size", "12px")
+		.style("font-family", "Open sans")
 		.text("Temperature in °C");
 
 	var line = d3.line()
@@ -139,7 +139,7 @@ function loadLineGraph()
 	function mousemove(d)
 	{
 		var x0 = x.invert(d3.mouse(this)[0]),
-			i=bisectDate(yearlyTemp, x0, 1),
+			i = bisectDate(yearlyTemp, x0, 1),
 			d0 = yearlyTemp[i - 1]
 			d1 = yearlyTemp[i]
 			d = x0 - d0.year > d1.year - x0 ? d1:d0;

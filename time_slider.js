@@ -36,7 +36,7 @@ function loadTimeSlider()
     .tickValues('')
     .default(defaultDate)
     .on('onchange', val => {
-      d3.select('p#value-time').text(d3.timeFormat('%Y %m')(val));
+      d3.select('p#value-time').text("in " + d3.timeFormat('%Y %m')(val));
       loadMap(val);
     });
   
@@ -45,13 +45,13 @@ function loadTimeSlider()
     .select('div#slider-time')
     .append('svg')
     .attr('width', 1000)
-    .attr('height', 100)
+    .attr('height', 75)
     .attr("class", "time-slider")
     .append('g')
-    .attr('transform', 'translate(30,30)');
+    .attr('transform', 'translate(15,17)');
   
   gTime.call(sliderTime);
   
-  d3.select('p#value-time').text(d3.timeFormat('%Y')(sliderTime.value()));
+  d3.select('p#value-time').text("in " + d3.timeFormat('%Y %m')(sliderTime.value()));
 }
 

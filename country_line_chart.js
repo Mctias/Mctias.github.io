@@ -6,7 +6,7 @@ var activeCountries = [];
 //Standard margin praxis
 var chartMargin = {top: 10, right: 30, bottom: 70, left: 60},
 	chartWidth = 920 - chartMargin.left + chartMargin.right,
-	chartHeight = 400 - chartMargin.top - chartMargin.bottom;
+	chartHeight = 450 - chartMargin.top - chartMargin.bottom;
 
 //Selecting the divs and appends the SVG
 var countryChartSvg = d3.select("#country-line-chart")
@@ -15,7 +15,7 @@ var countryChartSvg = d3.select("#country-line-chart")
 	.attr("width", chartWidth + chartMargin.left + chartMargin.right)
 	.append("g")
 	.attr("transform", 
-		"translate(" + chartMargin.left +"," + chartMargin.top +")");
+		"translate(" + chartMargin.left +"," + (chartMargin.top + 35) +")");
 
 //Gets the remove button
 var removeButton = document.getElementById("close-country-line-chart");
@@ -82,6 +82,7 @@ function loadCountryLineChart(countryData)
 		.domain([lowestYear, highestYear])
 		.range([0, chartWidth]);
 
+	//X-axis label
 	countryChartSvg.append("g")
 		.attr("class", "countryX")
 		.attr("transform","translate(0," + chartHeight + ")")
@@ -91,6 +92,7 @@ function loadCountryLineChart(countryData)
 		.attr("y", 35 )
 		.style("fill", "black")
 		.style("font-size", "14px")
+		.style("font-family", "Open sans")
 		.text("Year");
 
 
@@ -99,6 +101,7 @@ function loadCountryLineChart(countryData)
 		.domain([lowestTemp, highestTemp])
 		.range([chartHeight, 0]);
 
+	//Y-axis label
 	countryChartSvg.append("g")
 		.attr("class", "countryY")
 		.call(d3.axisLeft(y))
@@ -110,6 +113,7 @@ function loadCountryLineChart(countryData)
       	.style("text-anchor", "middle")  
       	.style("fill", "black")
       	.style("font-size", "14px")
+		.style("font-family", "Open sans")
 		.text("Temperature in °C");
 
 
@@ -184,7 +188,7 @@ function loadCountryLineChart(countryData)
 			countryChartSvg.append("text")
 				.attr("class", "country-text")
 				.attr("x", chartWidth / 6 * i)
-				.attr("y", 385)
+				.attr("y", 400)
 				.style("text-anchor", "middle") 
 				.style("font-weight", "bold") 
 				.style("font-size", "19px") 

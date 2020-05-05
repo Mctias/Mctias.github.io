@@ -1,16 +1,119 @@
 body{
-	zoom:80%;
+	font-family: 'Open sans'; 
+	font-size: 12px;
 }
 
+
+#choropleth-menu{
+	width: 46%;
+	border: 1px solid black;
+	border-radius: 5px;
+	border-spacing: 4px;
+	display: inline-block;
+}
+
+#choropleth-menu-heading{
+	margin: 2px;
+	font-weight: bold;
+}
+
+#time-menu-year{
+	position: relative;
+	display: inline;
+}
+
+#time-menu-month{
+	position: relative;
+	display: inline;
+}
+
+#heatmap-menu{
+	width: 46%;
+	border: 1px solid black;
+	border-radius: 5px;
+	border-spacing: 4px;
+	position: relative;
+	top: -122px;
+	left: 50%;
+}
+
+#heatmap-menu-heading{
+	margin: 2px;
+	font-weight: bold;
+}
+
+#close-heat-map{
+	position: relative;
+	background-color: red;
+	border-color: red;
+	z-index: 999;
+	margin: 2px;
+}
+
+#show-world-values{
+	position: relative;
+	background-color: steelblue;
+	border-color: steelblue;
+	z-index: 999;
+	margin: 2px;
+
+}
+
+#maps div{
+	zoom:80%;
+	position: relative;
+	display: inline;
+	top: -100;
+}
+
+img{
+	position: relative;
+	left: 950px;
+	top: -74px;
+	width: 900px;
+	height: 35px;
+
+}
+
+#legends{
+	height: 75px;
+}
+
+#value-time{
+	position: relative;
+	left: 468px;
+	top: -468px;
+	font-size: 18px;
+
+}
+
+#time-slider-div{
+	height: 50px;
+}
+
+#slider-time{
+	position: relative;
+	top:-50px;
+}
 
 #charts div{
 	position: relative;
 	display: inline;
 }
 
+.chart-selection-button{
+	zoom:80%;
+	position: absolute;
+	left: 890px;
+	top: -415px;
+	background-color: steelblue;
+	border-color: steelblue;
+}
+
 #country-line-chart{
 	position: relative;	
 	left: 50px;
+	zoom:80%;
 }
 
 #close-country-line-chart{
@@ -22,59 +125,13 @@ body{
 
 }
 
-#close-heat-map{
-	position: relative;
-	left: 150px;
-	top: -450px;
-	background-color: red;
-	border-color: red;
-	z-index: 999;
-}
-
-#show-world-values{
-	position: relative;
-	left: 225px;
-	top: -450px;
-	background-color: steelblue;
-	border-color: steelblue;
-	z-index: 999;
-
-}
-
-img{
-	position: relative;
-	left: 1150px;
-	top: -80px;
-	width: 1000px;
-	height: 40px;
-
-}
-
-.chart-selection-button{
-	position: absolute;
-	left: 890px;
-	top: -415px;
-	background-color: steelblue;
-	border-color: steelblue;
-}
-
-#maps div{
-	position: relative;
-	display: inline;
-}
-
-#time-menu{
-	position: relative;
-	display: inline;
-}
-
 .loader {
-  border: 16px solid #f3f3f3;
+  border: 25px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #2b8cbe;
-  border-right: 16px solid #a6bddb;
-  border-bottom: 16px solid #fdbb84;
-  border-left: 16px solid #e34a33;
+  border-top: 25px solid #2b8cbe;
+  border-right: 25px solid #a6bddb;
+  border-bottom: 25px solid #fdbb84;
+  border-left: 25px solid #e34a33;
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
@@ -87,7 +144,8 @@ img{
 #load-text{
 	position: absolute;		
 	left: 50%;
-	top: 53%;
+	top: 59%;
+	font-weight: bold;
 }
 
 @-webkit-keyframes spin {
