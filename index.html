@@ -336,6 +336,10 @@
 			<button id="show-world-values" type="button" onClick = "loadHeatMap(false, null, false)">Show world values </button>
 	    	<button id="close-heat-map" type="button" onClick = "removeHeatMap()"> Hide map </button>
 	    	<br>
+
+	    	<input type="radio" name="time-period-selection" id="display-early" checked ="checked" onchange="loadHeatMap(false, null, false)"> Display period 1750-2015 (world values)
+	    	<input type="radio" name="time-period-selection" id="display-late" onchange = "loadHeatMap(false, null, false)"> Display period 1850-2015 (world values)
+	    	<br>
 	    	<input type="checkbox" id="link-maps" checked="checked">Update heatmap when interacting with choropleth
 		</div>
 

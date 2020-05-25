@@ -36,6 +36,12 @@ function loadHeatMap(firstLoad, country, isDisplayingCountry, sliderData)
 
 	var place = " the world";
 	var number = 1;
+	var startYear = 1750;
+
+	//User input decides the time period displayed
+	
+	if(document.getElementById("display-late").checked)
+		startYear = 1850;
 
 
 	//The values for a country
@@ -72,7 +78,7 @@ function loadHeatMap(firstLoad, country, isDisplayingCountry, sliderData)
 	else
 	{
 		worldTempData.forEach(function(d){
-			if(yearFormat(d.dt) >= 1850)
+			if(yearFormat(d.dt) >= startYear)
 				heatMapData.push(d)
 		});
 		
